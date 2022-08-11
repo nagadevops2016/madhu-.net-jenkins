@@ -28,13 +28,6 @@ pipeline {
              steps{
                bat 'dotnet publish WebApplication/WebApplication.csproj --configuration Release --no-restore'
              }
-        }
-        stage('Deploy'){
-             steps{
-               
-               bat 'echo %cd%'
-               bat 'nohup dotnet C:\ProgramData\Jenkins\.jenkins\workspace\madhu-net\WebApplication\bin\Release\netcoreapp3.1\publish\WebApplication.dll --urls="http://127.0.0.1:9090" --ip="127.0.0.1" --port=9090 --no-restore > /dev/null 2>&1 &'
-             }
-        }        
+        }       
     }
 }
