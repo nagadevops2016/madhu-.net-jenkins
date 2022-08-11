@@ -1,41 +1,41 @@
 pipeline {
     agent any
      triggers {
-        githubPush()
+        githubPubat()
       }
     stages {
         stage('Restore packages'){
            steps{
-               sh 'dotnet restore WebApplication.sln'
+               bat 'dotnet restore WebApplication.sln'
             }
          }        
         stage('Clean'){
            steps{
-               sh 'dotnet clean WebApplication.sln --configuration Release'
+               bat 'dotnet clean WebApplication.sln --configuration Release'
             }
          }
         stage('Build'){
            steps{
-               sh 'dotnet build WebApplication.sln --configuration Release --no-restore'
+               bat 'dotnet build WebApplication.sln --configuration Release --no-restore'
             }
          }
         stage('Test: Unit Test'){
            steps {
-                sh 'dotnet test XUnitTestProject/XUnitTestProject.csproj --configuration Release --no-restore'
+                bat 'dotnet test XUnitTestProject/XUnitTestProject.csproj --configuration Release --no-restore'
              }
           }
-        stage('Publish'){
+        stage('Publibat'){
              steps{
-               sh 'dotnet publish WebApplication/WebApplication.csproj --configuration Release --no-restore'
+               bat 'dotnet publibat WebApplication/WebApplication.csproj --configuration Release --no-restore'
              }
         }
         stage('Deploy'){
              steps{
-               sh '''for pid in $(lsof -t -i:9090); do
+               bat '''for pid in $(lsof -t -i:9090); do
                        kill -9 $pid
                done'''
-               sh 'cd WebApplication/bin/Release/netcoreapp3.1/publish/'
-               sh 'nohup dotnet WebApplication.dll --urls="http://104.128.91.189:9090" --ip="104.128.91.189" --port=9090 --no-restore > /dev/null 2>&1 &'
+               bat 'cd WebApplication/bin/Release/netcoreapp3.1/publibat/'
+               bat 'nohup dotnet WebApplication.dll --urls="http://127.0.0.1:9090" --ip="127.0.0.1" --port=9090 --no-restore > /dev/null 2>&1 &'
              }
         }        
     }
